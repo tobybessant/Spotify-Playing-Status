@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using Alexa.NET.Response;
 using Alexa.NET.Request;
-
+using Alexa.NET.Request.Type;
 using Amazon.Lambda.Core;
+using SpotifyPlayingStatus.Core;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializerAttribute(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -17,21 +13,35 @@ namespace SpotifyPlayingStatus
     {
         
         /// <summary>
-        /// A simple function that takes a string and returns both the upper and lower case version of the string.
+        /// Alexa Skill entry function.
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public SkillResponse FunctionHandler(SkillRequest input, ILambdaContext context)
+        public SkillResponse FunctionHandler(SkillRequest request, ILambdaContext _)
         {
-            var response = new SkillResponse();
+            if (request.Request is IntentRequest intentRequest)
+            {
+                var handler = IntentHandlerFactory.GetHandlerForIntentRequest(intentRequest);
 
-            response.Version = input.Version;
+                var body = handler.Handle(intentRequest);
 
-            response.Response = new ResponseBody();
-            response.Response.OutputSpeech = new PlainTextOutputSpeech("How do you do!");
+                return Response(request, body);
+            }
 
-            return response;
+            return Response(request, new ResponseBody
+            {
+                OutputSpeech = new PlainTextOutputSpeech("How do you do?")
+            });
+        }
+
+        private SkillResponse Response(SkillRequest request, ResponseBody body = null)
+        {
+            return new SkillResponse
+            {
+                Version = request.Version,
+                Response = body
+            };
         }
     }
 }
