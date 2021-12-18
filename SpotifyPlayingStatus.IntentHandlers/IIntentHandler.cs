@@ -1,10 +1,11 @@
-﻿using Alexa.NET.Request.Type;
+﻿using Alexa.NET.Request;
 using Alexa.NET.Response;
+using System.Threading.Tasks;
 
 namespace SpotifyPlayingStatus.IntentHandlers
 {
     public interface IIntentHandler
     {
-        public ResponseBody Handle(IntentRequest intentRequest);
+        public Task<SkillResponse> Handle(SkillRequest intentRequest);
     }
 }

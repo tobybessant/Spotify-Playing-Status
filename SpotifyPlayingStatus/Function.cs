@@ -3,6 +3,8 @@ using Alexa.NET.Request;
 using Alexa.NET.Request.Type;
 using Amazon.Lambda.Core;
 using SpotifyPlayingStatus.Core;
+using System.Threading.Tasks;
+using Alexa.NET;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializerAttribute(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -18,30 +20,23 @@ namespace SpotifyPlayingStatus
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public SkillResponse FunctionHandler(SkillRequest request, ILambdaContext _)
+        public async Task<SkillResponse> FunctionHandler(SkillRequest request, ILambdaContext _)
         {
-            if (request.Request is IntentRequest intentRequest)
+            var userId = request.Session.User.UserId;
+
+            if (userId == null || userId == string.Empty)
             {
-                var handler = IntentHandlerFactory.GetHandlerForIntentRequest(intentRequest);
-
-                var body = handler.Handle(intentRequest);
-
-                return Response(request, body);
+                return ResponseBuilder.TellWithLinkAccountCard(Phrases.PleaseAuthenticate);
             }
 
-            return Response(request, new ResponseBody
+            if (request.Request is IntentRequest intentRequest)
             {
-                OutputSpeech = new PlainTextOutputSpeech("How do you do?")
-            });
-        }
+                var handler = IntentHandlerFactory.GetHandlerForIntentRequest(intentRequest.Intent);
 
-        private SkillResponse Response(SkillRequest request, ResponseBody body = null)
-        {
-            return new SkillResponse
-            {
-                Version = request.Version,
-                Response = body
-            };
+                return await handler.Handle(request);
+            }
+
+            return ResponseBuilder.Tell(Phrases.LaunchIntro);
         }
     }
 }

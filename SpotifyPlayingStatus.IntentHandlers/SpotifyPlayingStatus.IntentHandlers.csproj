@@ -8,4 +8,8 @@
     <PackageReference Include="Alexa.NET" Version="1.19.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SpotifyPlayingStatus.ApiClients\SpotifyPlayingStatus.ApiClients.csproj" />
+  </ItemGroup>
+
 </Project>

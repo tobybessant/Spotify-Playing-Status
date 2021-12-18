@@ -1,16 +1,18 @@
-﻿using Alexa.NET.Request.Type;
+﻿using Alexa.NET;
+using Alexa.NET.Request;
+using Alexa.NET.Request.Type;
 using Alexa.NET.Response;
+using System.Threading.Tasks;
 
 namespace SpotifyPlayingStatus.IntentHandlers
 {
     public class UnknownIntentHandler : IIntentHandler
     {
-        public ResponseBody Handle(IntentRequest intentRequest)
+        public Task<SkillResponse> Handle(SkillRequest request)
         {
-            return new ResponseBody
-            {
-                OutputSpeech = new PlainTextOutputSpeech($"Unknown intent {intentRequest.Intent.Name}")
-            };
+            var intentRequest = request.Request as IntentRequest;
+
+            return Task.FromResult(ResponseBuilder.Tell($"Unknown intent {intentRequest?.Intent.Name ?? string.Empty}"));
         }
     }
 }
