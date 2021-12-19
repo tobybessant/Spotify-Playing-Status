@@ -22,9 +22,9 @@ namespace SpotifyPlayingStatus
         /// <returns></returns>
         public async Task<SkillResponse> FunctionHandler(SkillRequest request, ILambdaContext _)
         {
-            var userId = request.Session.User.UserId;
+            var accessToken = request.Context.System.User.AccessToken;
 
-            if (userId == null || userId == string.Empty)
+            if (accessToken == null || accessToken == string.Empty)
             {
                 return ResponseBuilder.TellWithLinkAccountCard(Phrases.PleaseAuthenticate);
             }
@@ -36,7 +36,10 @@ namespace SpotifyPlayingStatus
                 return await handler.Handle(request);
             }
 
-            return ResponseBuilder.Tell(Phrases.LaunchIntro);
+            var launchResponse = ResponseBuilder.Tell(Phrases.LaunchIntro);
+            launchResponse.Response.ShouldEndSession = false;
+
+            return launchResponse;
         }
     }
 }

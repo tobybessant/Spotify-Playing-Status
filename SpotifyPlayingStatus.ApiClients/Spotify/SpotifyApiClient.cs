@@ -25,6 +25,11 @@ namespace SpotifyPlayingStatus.ApiClients.Spotify
         {
             var response = await spotifyClient.Player.GetCurrentPlayback();
 
+            if (response == null)
+            {
+                throw new Exception("Unable to fetch playing data from Spotify.");
+            }
+
             var item = response.Item as FullTrack;
 
             return new SpotifyPlayingResponse

@@ -12,16 +12,23 @@ namespace SpotifyPlayingStatus.IntentHandlers
     {
         public async Task<SkillResponse> Handle(SkillRequest request)
         {
-            var spotify = new SpotifyApiClient(request.Session.User.UserId);
+            var spotify = new SpotifyApiClient(request.Context.System.User.AccessToken);
 
-            var playing = await spotify.GetSpotifyPlayingStatus();
-
-            if (!playing.IsPlaying)
+            try
             {
-                return ResponseBuilder.Tell("Spotify is not in use at the moment.");
-            }
+                var playing = await spotify.GetSpotifyPlayingStatus();
 
-            return ResponseBuilder.Tell($"Spotify is currently playing {playing.TrackName} by {playing.PrimaryArtist} on {playing.DeviceName}");
+                if (!playing.IsPlaying)
+                {
+                    return ResponseBuilder.Tell("Spotify is not in use at the moment.");
+                }
+
+                return ResponseBuilder.Tell($"Spotify is currently playing {playing.TrackName} by {playing.PrimaryArtist} on {playing.DeviceName}");
+            }
+            catch
+            {
+                return ResponseBuilder.Tell("Error fetching data from Spotify.");
+            }
         }
     }
 }
