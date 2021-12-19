@@ -36,10 +36,7 @@ namespace SpotifyPlayingStatus
                 return await handler.Handle(request);
             }
 
-            var launchResponse = ResponseBuilder.Tell(Phrases.LaunchIntro);
-            launchResponse.Response.ShouldEndSession = false;
-
-            return launchResponse;
+            return ResponseBuilder.Ask(Phrases.LaunchIntro, new Reprompt(Phrases.LaunchReprompt));
         }
     }
 }
