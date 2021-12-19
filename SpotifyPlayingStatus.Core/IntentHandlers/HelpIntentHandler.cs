@@ -13,10 +13,7 @@ namespace SpotifyPlayingStatus.Core.IntentHandlers
     {
         public Task<SkillResponse> Handle(SkillRequest request)
         {
-            var helpResponse = ResponseBuilder.Tell(Phrases.Help);
-            helpResponse.Response.ShouldEndSession = false;
-
-            return Task.FromResult(helpResponse);
+            return Task.FromResult(ResponseBuilder.Ask(Phrases.Help, new Reprompt(Phrases.HelpReprompt)));
         }
     }
 }

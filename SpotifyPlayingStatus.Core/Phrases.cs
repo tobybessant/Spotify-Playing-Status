@@ -15,5 +15,7 @@ namespace SpotifyPlayingStatus.Core
         public const string LaunchReprompt = "Ask: is Spotify in use?";
 
         public const string Help = "You can ask: is Spotify in use?, or, you can say cancel... what would you like to do?";
+
+        public const string HelpReprompt = "What would you like to do?";
     }
 }
