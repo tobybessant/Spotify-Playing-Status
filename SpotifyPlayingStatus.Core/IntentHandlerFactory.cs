@@ -14,6 +14,10 @@ namespace SpotifyPlayingStatus.Core
 
                 Intent.Help => new HelpIntentHandler(),
 
+                Intent.Cancel => new CancelIntentHandler(),
+
+                Intent.Stop => new CancelIntentHandler(),
+
                 _ => new UnknownIntentHandler()
             };
         }
