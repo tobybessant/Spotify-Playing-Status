@@ -15,14 +15,14 @@ namespace SpotifyPlayingStatus.Core.IntentHandlers
 
             try
             {
-                var playing = await spotify.GetSpotifyPlayingStatus();
+                var playerContext = await spotify.GetSpotifyPlayer();
 
-                if (!playing.IsPlaying)
+                if (!playerContext.IsPlaying)
                 {
                     return ResponseBuilder.Tell("Spotify is not in use at the moment.");
                 }
 
-                return ResponseBuilder.Tell($"Spotify is currently playing {playing.TrackName} by {playing.PrimaryArtist} on {playing.DeviceName}");
+                return ResponseBuilder.Tell($"Spotify is currently playing {playerContext.TrackName} by {playerContext.PrimaryArtist} on {playerContext.DeviceName}");
             }
             catch
             {

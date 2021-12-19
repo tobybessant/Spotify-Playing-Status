@@ -21,13 +21,13 @@ namespace SpotifyPlayingStatus.ApiClients.Spotify
             spotifyClient = new SpotifyClient(spotifyClientId);
         }
 
-        public async Task<SpotifyPlayingResponse> GetSpotifyPlayingStatus()
+        public async Task<PlayerContext> GetSpotifyPlayer()
         {
             var response = await spotifyClient.Player.GetCurrentPlayback();
 
             if (response == null || !response.IsPlaying)
             {
-                return new SpotifyPlayingResponse
+                return new PlayerContext
                 {
                     IsPlaying = false
                 };
@@ -35,7 +35,7 @@ namespace SpotifyPlayingStatus.ApiClients.Spotify
 
             var item = response.Item as FullTrack;
 
-            return new SpotifyPlayingResponse
+            return new PlayerContext
             {
                 DeviceName = response.Device.Name,
                 TrackName = item.Name,

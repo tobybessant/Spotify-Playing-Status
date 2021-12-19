@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpotifyPlayingStatus.ApiClients.Spotify
 {
-    public class SpotifyPlayingResponse
+    public class PlayerContext
     {
         public string DeviceName { get; set; }
 
