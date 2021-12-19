@@ -4,7 +4,7 @@ using Alexa.NET.Request.Type;
 using Alexa.NET.Response;
 using System.Threading.Tasks;
 
-namespace SpotifyPlayingStatus.IntentHandlers
+namespace SpotifyPlayingStatus.Core.IntentHandlers
 {
     public class UnknownIntentHandler : IIntentHandler
     {

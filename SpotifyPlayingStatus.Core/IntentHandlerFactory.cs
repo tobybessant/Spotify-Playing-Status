@@ -1,6 +1,6 @@
 ﻿using System;
 using Alexa.NET.Request;
-using SpotifyPlayingStatus.IntentHandlers;
+using SpotifyPlayingStatus.Core.IntentHandlers;
 
 namespace SpotifyPlayingStatus.Core
 {
@@ -11,6 +11,8 @@ namespace SpotifyPlayingStatus.Core
             return intent.Name switch
             {
                 Intent.PlayingStatus => new SpotifyPlayingStatusHandler(),
+
+                Intent.Help => new HelpIntentHandler(),
 
                 _ => new UnknownIntentHandler()
             };

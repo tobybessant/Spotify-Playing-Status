@@ -9,5 +9,7 @@ namespace SpotifyPlayingStatus.Core
     public static class Intent
     {
         public const string PlayingStatus = "PlayingStatus";
+
+        public const string Help = "AMAZON.HelpIntent";
     }
 }

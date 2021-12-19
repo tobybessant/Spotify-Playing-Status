@@ -2,7 +2,7 @@
 using Alexa.NET.Response;
 using System.Threading.Tasks;
 
-namespace SpotifyPlayingStatus.IntentHandlers
+namespace SpotifyPlayingStatus.Core.IntentHandlers
 {
     public interface IIntentHandler
     {
