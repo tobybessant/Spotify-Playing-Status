@@ -12,18 +12,18 @@ namespace SpotifyPlayingStatus.ApiClients.Spotify
         public string Name { get; set; }
     }
 
-    public class SpotifyApiClient
+    public class SpotifyApiService
     {
-        private readonly ISpotifyClient spotifyClient;
+        private readonly ISpotifyClient spotify;
 
-        public SpotifyApiClient(string spotifyClientId)
+        public SpotifyApiService(SpotifyClient spotifyClient)
         {
-            spotifyClient = new SpotifyClient(spotifyClientId);
+            spotify = spotifyClient;
         }
 
         public async Task<PlayerContext> GetSpotifyPlayer()
         {
-            var response = await spotifyClient.Player.GetCurrentPlayback();
+            var response = await spotify.Player.GetCurrentPlayback();
 
             if (response == null || !response.IsPlaying)
             {

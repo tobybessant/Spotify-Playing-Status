@@ -5,6 +5,7 @@ using Amazon.Lambda.Core;
 using SpotifyPlayingStatus.Core;
 using System.Threading.Tasks;
 using Alexa.NET;
+using SpotifyPlayingStatus.Core.Extensions;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializerAttribute(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -22,12 +23,12 @@ namespace SpotifyPlayingStatus
         /// <returns></returns>
         public async Task<SkillResponse> FunctionHandler(SkillRequest request, ILambdaContext _)
         {
-            var accessToken = request.Context.System.User.AccessToken;
-
-            if (accessToken == null || accessToken == string.Empty)
+            if (!request.LinkedSpotify())
             {
                 return ResponseBuilder.TellWithLinkAccountCard(Phrases.PleaseAuthenticate);
             }
+
+            request.RegisterServices();
 
             if (request.Request is IntentRequest intentRequest)
             {

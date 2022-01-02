@@ -2,6 +2,7 @@
 using Alexa.NET.Request;
 using Alexa.NET.Response;
 using SpotifyPlayingStatus.ApiClients.Spotify;
+using SpotifyPlayingStatus.Core.Extensions;
 using System;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace SpotifyPlayingStatus.Core.IntentHandlers
     {
         public async Task<SkillResponse> Handle(SkillRequest request)
         {
-            var spotify = new SpotifyApiClient(request.Context.System.User.AccessToken);
+            var spotify = request.GetInstance<SpotifyApiService>();
 
             try
             {
