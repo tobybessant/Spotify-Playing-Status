@@ -15,5 +15,7 @@ namespace SpotifyPlayingStatus.Core
         public const string Cancel = "AMAZON.CancelIntent";
 
         public const string Stop = "AMAZON.StopIntent";
+
+        public const string Fallback = "AMAZON.FallbackIntent";
     }
 }
