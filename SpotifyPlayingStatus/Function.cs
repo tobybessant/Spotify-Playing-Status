@@ -14,7 +14,6 @@ namespace SpotifyPlayingStatus
 {
     public class Function
     {
-        
         /// <summary>
         /// Alexa Skill entry function.
         /// </summary>
@@ -32,7 +31,7 @@ namespace SpotifyPlayingStatus
 
             if (request.Request is IntentRequest intentRequest)
             {
-                var factory = request.GetInstance<IntentHandlerFactory>();
+                var factory = request.GetInstance<IIntentHandlerFactory>();
                 var handler = factory.GetHandlerForIntentRequest(intentRequest.Intent);
 
                 return await handler.Handle(request);

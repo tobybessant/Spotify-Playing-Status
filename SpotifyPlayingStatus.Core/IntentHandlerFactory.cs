@@ -4,6 +4,11 @@ using SpotifyPlayingStatus.Core.IntentHandlers;
 
 namespace SpotifyPlayingStatus.Core
 {
+    public interface IIntentHandlerFactory
+    {
+        IIntentHandler GetHandlerForIntentRequest(Alexa.NET.Request.Intent intent);
+    }
+
     public class IntentHandlerFactory
     {
         public IIntentHandler GetHandlerForIntentRequest(Alexa.NET.Request.Intent intent)
