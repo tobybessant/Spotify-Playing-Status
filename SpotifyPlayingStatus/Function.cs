@@ -28,7 +28,7 @@ namespace SpotifyPlayingStatus
                 return ResponseBuilder.TellWithLinkAccountCard(Phrases.PleaseAuthenticate);
             }
 
-            request.RegisterServices();
+            request.RegisterServices(Container.Initialise);
 
             if (request.Request is IntentRequest intentRequest)
             {

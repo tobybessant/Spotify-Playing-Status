@@ -13,19 +13,14 @@ namespace SpotifyPlayingStatus.Core.Extensions
     {
         private const string containerKey = "CONTAINER";
 
-        public static void RegisterServices(this SkillRequest request)
+        public static void RegisterServices(this SkillRequest request, Func<SkillRequest, Dictionary<Type, object>> createContainer)
         {
-
             if (request.Session.Attributes.ContainsKey(containerKey))
             {
                 return;
             }
 
-            var container = new Dictionary<Type, object>();
-
-            container.Add(
-                typeof(SpotifyApiService),
-                new SpotifyApiService(new SpotifyClient(request.Context.System.User.AccessToken)));
+            var container = createContainer(request);
 
             request.Session.Attributes.Add(containerKey, container);
         }
@@ -39,7 +34,10 @@ namespace SpotifyPlayingStatus.Core.Extensions
 
             if (value is Dictionary<Type, object> container)
             {
-                container.TryGetValue(typeof(T), out var instance);
+                if (!container.TryGetValue(typeof(T), out var instance) || instance == null)
+                {
+                    throw new Exception($"No requested instance for '{typeof(T)}' found.");
+                }
 
                 return (T)instance;
             }
@@ -49,7 +47,7 @@ namespace SpotifyPlayingStatus.Core.Extensions
 
         public static bool LinkedSpotify(this SkillRequest request)
         {
-            var accessToken = request.Context.System.User.AccessToken;
+            var accessToken = request.Context?.System?.User?.AccessToken;
 
             return accessToken != null && accessToken != string.Empty;
         }
