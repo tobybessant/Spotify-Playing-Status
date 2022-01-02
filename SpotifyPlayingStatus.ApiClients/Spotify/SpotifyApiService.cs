@@ -16,7 +16,7 @@ namespace SpotifyPlayingStatus.ApiClients.Spotify
     {
         private readonly ISpotifyClient spotify;
 
-        public SpotifyApiService(SpotifyClient spotifyClient)
+        public SpotifyApiService(ISpotifyClient spotifyClient)
         {
             spotify = spotifyClient;
         }
