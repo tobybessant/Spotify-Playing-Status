@@ -21,10 +21,11 @@ namespace SpotifyPlayingStatus.Core.Extensions
                 return;
             }
 
-            var container = new Dictionary<Type, Func<object>>();
+            var container = new Dictionary<Type, object>();
 
             container.Add(
-                typeof(SpotifyApiService), () => new SpotifyApiService(new SpotifyClient(request.Context.System.User.AccessToken)));
+                typeof(SpotifyApiService),
+                new SpotifyApiService(new SpotifyClient(request.Context.System.User.AccessToken)));
 
             request.Session.Attributes.Add(containerKey, container);
         }
@@ -36,11 +37,11 @@ namespace SpotifyPlayingStatus.Core.Extensions
                 throw new Exception("No session DI container found.");
             }
 
-            if (value is Dictionary<Type, Func<object>> container)
+            if (value is Dictionary<Type, object> container)
             {
-                container.TryGetValue(typeof(T), out var instanceBuilder);
+                container.TryGetValue(typeof(T), out var instance);
 
-                return (T)instanceBuilder();
+                return (T)instance;
             }
 
             throw new Exception("No session DI container found.");
