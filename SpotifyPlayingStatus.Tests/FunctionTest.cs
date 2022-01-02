@@ -62,7 +62,7 @@ namespace SpotifyPlayingStatus.Tests
         }
 
         [Fact]
-        public async void When_I_call_the_lambda_with_intent_expect_the_handler_factory_to_be_called()
+        public async void When_I_call_the_lambda_with_intent_expect_the_handler_factory_to_be_called_once()
         {
             // Arrange
             var request = CreateSkillRequest<IntentRequest>(authenticated: true);
@@ -87,7 +87,7 @@ namespace SpotifyPlayingStatus.Tests
         }
 
         [Fact]
-        public async void When_I_call_the_lambda_with_intent_expect_the_apprpriate_handler_to_be_called_with_the_request_object()
+        public async void When_I_call_the_lambda_with_intent_expect_the_apprpriate_handler_to_be_called_once_with_the_request_object()
         {
             // Arrange
             var request = CreateSkillRequest<IntentRequest>(authenticated: true);
