@@ -23,7 +23,7 @@ namespace SpotifyPlayingStatus.Tests
         {
             var alexaIntent = new Alexa.NET.Request.Intent { Name = intent };
 
-            var handler = IntentHandlerFactory.GetHandlerForIntentRequest(alexaIntent);
+            var handler = new IntentHandlerFactory().GetHandlerForIntentRequest(alexaIntent);
 
             Assert.Equal(handler.GetType(), expectedHandler);
         }

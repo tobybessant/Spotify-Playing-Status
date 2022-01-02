@@ -32,7 +32,8 @@ namespace SpotifyPlayingStatus
 
             if (request.Request is IntentRequest intentRequest)
             {
-                var handler = IntentHandlerFactory.GetHandlerForIntentRequest(intentRequest.Intent);
+                var factory = request.GetInstance<IntentHandlerFactory>();
+                var handler = factory.GetHandlerForIntentRequest(intentRequest.Intent);
 
                 return await handler.Handle(request);
             }

@@ -19,6 +19,8 @@ namespace SpotifyPlayingStatus.Core
                 typeof(SpotifyApiService),
                 new SpotifyApiService(new SpotifyClient(request.Context.System.User.AccessToken)));
 
+            container.Add(typeof(IntentHandlerFactory), new IntentHandlerFactory());
+
             return container;
         } 
     }

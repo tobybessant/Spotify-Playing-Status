@@ -6,7 +6,7 @@ namespace SpotifyPlayingStatus.Core
 {
     public class IntentHandlerFactory
     {
-        public static IIntentHandler GetHandlerForIntentRequest(Alexa.NET.Request.Intent intent)
+        public IIntentHandler GetHandlerForIntentRequest(Alexa.NET.Request.Intent intent)
         {
             return intent.Name switch
             {
