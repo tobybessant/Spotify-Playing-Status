@@ -126,5 +126,35 @@ namespace SpotifyPlayingStatus.Tests
                 IsPlaying = false
             });
         }
+
+        [Fact]
+        public async void When_I_call_GetSpotifyPlayer_it_should_return_not_busy_if_Spotify_returns_isPlaying_false()
+        {
+            var deviceName = "Toby iPhone";
+            var isPlaying = false;
+            var trackName = "Dreams - 2004 Remaster";
+            var artistName = "Fleetwood Mac";
+
+            var currentlyPlaying = new CurrentlyPlayingContext
+            {
+                Device = new Device { Name = deviceName },
+                IsPlaying = isPlaying,
+                Item = new FullTrack
+                {
+                    Name = trackName,
+                    Artists = new List<SimpleArtist> { new SimpleArtist { Name = artistName } },
+                }
+            };
+
+            spotifyClientMock.Setup(s => s.Player.GetCurrentPlayback()).ReturnsAsync(currentlyPlaying);
+
+            var playing = await spotifyApiService.GetSpotifyPlayer();
+
+            Assert.Equal(playing, new PlayerContext
+            {
+                IsPlaying = false
+            });
+        }
+
     }
 }
