@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SpotifyPlayingStatus.Core.IntentHandlers
 {
-    internal class CancelIntentHandler : IIntentHandler
+    public class CancelIntentHandler : IIntentHandler
     {
         public Task<SkillResponse> Handle(SkillRequest request)
         {
